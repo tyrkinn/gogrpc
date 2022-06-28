@@ -5,10 +5,12 @@ import (
 	"flag"
 	"gogrpc/proto"
 	"gogrpc/utils"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 	"log"
 	"strconv"
+	"strings"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 const (
@@ -22,8 +24,8 @@ func checkAndGetArgs() (int32, int32) {
 	firstTwoArgs := flag.Args()[:2]
 	var intArgsSlice []int32
 	for _, arg := range firstTwoArgs {
-		v, err := strconv.Atoi(arg)
-		utils.CheckErr(err, &utils.CheckErrArgs{Message: "Args must be int"})
+		v, err := strconv.Atoi(strings.Trim(arg, " "))
+		utils.CheckErr(err, &utils.CheckErrArgs{Message: "Args must be int: " + arg})
 		intArgsSlice = append(intArgsSlice, int32(v))
 	}
 	return intArgsSlice[0], intArgsSlice[1]
