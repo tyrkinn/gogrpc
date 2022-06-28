@@ -7,11 +7,11 @@ type CheckErrArgs struct {
 }
 
 func CheckErr(err error, args *CheckErrArgs) {
-	if args != nil {
-		log.Fatal(args.Message)
-	}
-	args = &CheckErrArgs{Message: "Error occurred: %v"}
 	if err != nil {
+		if args != nil {
+			log.Fatal(args.Message)
+		}
+		args = &CheckErrArgs{Message: "Error occurred: %v"}
 		log.Fatalf(args.Message, err)
 	}
 }
